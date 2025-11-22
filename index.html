@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sakura Bloom Ultra FX + Stem</title>
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        background: linear-gradient(120deg, #ffe6f7, #ffd9f2, #ffe6ff);
+        background-size: 300% 300%;
+        animation: bgMove 12s ease-in-out infinite;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    @keyframes bgMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* Flower Container */
+    #flower-container {
+        position: absolute;
+        top: 18%;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: bloom 3s ease-out forwards, pulse 2.5s ease-in-out infinite 3s;
+        filter: drop-shadow(0 0 18px #ffb3df);
+        opacity: 0;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes bloom {
+        0% { transform: translateX(-50%) scale(0); opacity: 0; }
+        60% { transform: translateX(-50%) scale(1.3); opacity: 1; }
+        100% { transform: translateX(-50%) scale(1); opacity: 1; }
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: translateX(-50%) scale(1); }
+        50% { transform: translateX(-50%) scale(1.08); }
+    }
+
+    /* Sakua petals (flower head) */
+    #flower {
+        width: 200px;
+        height: 200px;
+        position: relative;
+    }
+
+    .petal-shape {
+        width: 90px;
+        height: 130px;
+        background: #ff99c8;
+        position: absolute;
+        border-radius: 60px 60px 20px 20px;
+        box-shadow: 0 0 18px #ffc1e6;
+    }
+
+    .p1 { top: 0; left: 50%; transform: translateX(-50%); }
+    .p2 { top: 18%; left: -7%; transform: rotate(-55deg); }
+    .p3 { top: 18%; right: -7%; transform: rotate(55deg); }
+    .p4 { bottom: 0; left: 15%; transform: rotate(130deg); }
+    .p5 { bottom: 0; right: 15%; transform: rotate(-130deg); }
+
+    /* Green Stem */
+    #stem {
+        width: 16px;
+        height: 170px;
+        background: linear-gradient(#3ea34a, #2e7d36);
+        margin: 0 auto;
+        border-radius: 12px;
+        box-shadow: 0 0 10px #7bd68b;
+        animation: stemGrow 2.5s ease-out forwards;
+        animation-delay: 1.5s;
+        opacity: 0;
+    }
+
+    @keyframes stemGrow {
+        0% { transform: scaleY(0); opacity: 0; }
+        100% { transform: scaleY(1); opacity: 1; }
+    }
+
+    /* Falling Petals */
+    .fall-petal {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background: #ff99c8;
+        border-radius: 60% 60% 40% 40%;
+        opacity: 0.9;
+        box-shadow: 0 0 12px #ffc1e6;
+        animation: fall linear infinite, sway ease-in-out infinite;
+    }
+
+    @keyframes fall {
+        0% { transform: translateY(-10vh) rotate(0deg); }
+        100% { transform: translateY(110vh) rotate(360deg); }
+    }
+
+    @keyframes sway {
+        0%, 100% { margin-left: 0; }
+        50% { margin-left: 20px; }
+    }
+
+    /* Sparkles */
+    .sparkle {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.8;
+        box-shadow: 0 0 12px white;
+        animation: sparkle 2s ease-out forwards;
+    }
+
+    @keyframes sparkle {
+        0% { transform: scale(0.2); opacity: 1; }
+        100% { transform: scale(1.8); opacity: 0; }
+    }
+
+    /* Message */
+    #message {
+        position: absolute;
+        top: 72%;
+        width: 100%;
+        font-size: 3.5rem;
+        color: #b30086;
+        font-weight: bold;
+        opacity: 0;
+        text-shadow: 0px 0px 18px #ff9de6, 0px 0px 28px #ffb3ec;
+        animation: fadein 3s ease-in forwards;
+        animation-delay: 4s;
+    }
+
+    @keyframes fadein {
+        from { opacity: 0; transform: scale(0.8); }
+        to { opacity: 1; transform: scale(1); }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- Flower + Stem Combined -->
+<div id="flower-container">
+    <div id="flower">
+        <div class="petal-shape p1"></div>
+        <div class="petal-shape p2"></div>
+        <div class="petal-shape p3"></div>
+        <div class="petal-shape p4"></div>
+        <div class="petal-shape p5"></div>
+    </div>
+
+    <div id="stem"></div>
+</div>
+
+<div id="message">Happy Men's Day (⁠ ˘ ⁠³⁠˘⁠)⁠♥</div>
+
+<script>
+function createFallingPetal() {
+    const p = document.createElement('div');
+    p.classList.add('fall-petal');
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDuration = (6 + Math.random() * 4) + 's';
+    p.style.animationDelay = Math.random() + 's';
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 15000);
+}
+setInterval(createFallingPetal, 200);
+
+function createSparkle() {
+    const sp = document.createElement('div');
+    sp.classList.add('sparkle');
+    sp.style.left = (50 + (Math.random() * 10 - 5)) + '%';
+    sp.style.top = (18 + (Math.random() * 10 - 5)) + '%';
+    document.body.appendChild(sp);
+    setTimeout(() => sp.remove(), 2000);
+}
+setInterval(createSparkle, 350);
+</script>
+
+</body>
+</html>
